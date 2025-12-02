@@ -1,7 +1,22 @@
+
 {
+  "name": "dogs-server",
+  "version": "1.0.0",
+  "description": "Express.js 기반 강아지 CRUD API 서버",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": ["express", "dogs", "api", "crud"],
+  "author": "thswjddn0812-coder",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "joi": "^18.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }
