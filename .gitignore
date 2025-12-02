@@ -15,3 +15,5 @@ Thumbs.db
 
 # 기타
 *.log
+
+/generated/prisma

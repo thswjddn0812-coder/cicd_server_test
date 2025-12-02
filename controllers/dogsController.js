@@ -1,33 +1,47 @@
-let dogs = [
-  { id: 1, name: '코코', breed: '푸들', age: 3 },
-  { id: 2, name: '초코', breed: '말티즈', age: 2 }
-];
-let nextId = 3;
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-exports.getDogs = (req, res) => {
-  res.json(dogs);
+exports.getDogs = async (req, res) => {
+  try {
+    const dogs = await prisma.dog.findMany();
+    res.json(dogs);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.addDog = (req, res) => {
-  const { name, breed, age } = req.body;
-  const newDog = { id: nextId++, name, breed, age };
-  dogs.push(newDog);
-  res.status(201).json(newDog);
+exports.addDog = async (req, res) => {
+  try {
+    const { name, breed, age } = req.body;
+    const newDog = await prisma.dog.create({
+      data: { name, breed, age }
+    });
+    res.status(201).json(newDog);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.deleteDog = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const idx = dogs.findIndex(dog => dog.id === id);
-  if (idx === -1) return res.status(404).json({ error: 'Dog not found' });
-  const deleted = dogs.splice(idx, 1);
-  res.json(deleted[0]);
+exports.deleteDog = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const deleted = await prisma.dog.delete({ where: { id } });
+    res.json(deleted);
+  } catch (err) {
+    res.status(404).json({ error: 'Dog not found' });
+  }
 };
 
-exports.updateDog = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const idx = dogs.findIndex(dog => dog.id === id);
-  if (idx === -1) return res.status(404).json({ error: 'Dog not found' });
-  const { name, breed, age } = req.body;
-  dogs[idx] = { id, name, breed, age };
-  res.json(dogs[idx]);
+exports.updateDog = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const { name, breed, age } = req.body;
+    const updated = await prisma.dog.update({
+      where: { id },
+      data: { name, breed, age }
+    });
+    res.json(updated);
+  } catch (err) {
+    res.status(404).json({ error: 'Dog not found' });
+  }
 };

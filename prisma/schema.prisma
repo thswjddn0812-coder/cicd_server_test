@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model dogs {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(50)
+  breed String @db.VarChar(50)
+  age   Int
+}

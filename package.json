@@ -1,4 +1,3 @@
-
 {
   "name": "dogs-server",
   "version": "1.0.0",
@@ -8,13 +7,20 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "keywords": ["express", "dogs", "api", "crud"],
+  "keywords": [
+    "express",
+    "dogs",
+    "api",
+    "crud"
+  ],
   "author": "thswjddn0812-coder",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^7.0.1",
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "joi": "^18.0.2"
+    "joi": "^18.0.2",
+    "prisma": "^6.19.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
